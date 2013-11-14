@@ -1,7 +1,13 @@
 
-/*
+/* Dropbox
  * app key : 0yi4d0jlmedtjf1
  * app secret : 0o1agnuwp8gb9aq
+ */
+
+/*
+ * T developers
+ * javascript key : cb7abc6e-6d46-46fc-bbf5-b95105fba242
+ * REST key : 1759d905-1d25-4490-b0c7-8916a96f64bf
  */
 
 var items = [];

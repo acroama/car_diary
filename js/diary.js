@@ -1,17 +1,20 @@
 
-/* Dropbox
+/* 
+ * Dropbox
  * app key : 0yi4d0jlmedtjf1
  * app secret : 0o1agnuwp8gb9aq
  */
 
 /*
- * T developers
- * javascript key : cb7abc6e-6d46-46fc-bbf5-b95105fba242
- * REST key : 1759d905-1d25-4490-b0c7-8916a96f64bf
+ * T developers BasS
+ * javascript TDCProjectKey : cb7abc6e-6d46-46fc-bbf5-b95105fba242
+ * REST TDCProjectKey : 1759d905-1d25-4490-b0c7-8916a96f64bf
  */
 
 var items = [];
-var saved;
+var fetched;
+
+/******************* Dropbox  
 
 var DROPBOX_APP_KEY = "0yi4d0jlmedtjf1";
 
@@ -41,11 +44,38 @@ $(function() {
 		});
 	}
 });
+****************/
+
+// AJAX 호출을 통해 데이터 가져오기
+function makeAjaxCall()
+{ 
+  $.ajax({
+  	type: "GET",
+    url: "https://apis.sktelecom.com/v1/baas/data/car_diary",
+    header: {
+    	'TDCProjectKey': 'cb7abc6e-6d46-46fc-bbf5-b95105fba242'
+    },
+		data: {
+			'limit': 1000
+		},
+		dataType: "json",
+	  contentType: "application/json; charset=utf-8",
+	    // contentType: "text/plain;charset=utf-8",
+	  success: function(json) {
+	  	fetched = json;
+	    console.log(fetched);
+	  },
+	  error: function(XMLHTTPRequest, textStatus, errorThrown) {
+	    console.log("error : " + XMLHttpRequest.responseText);
+	  }
+  });
+}
+
 
 
 $(document).on("vclick", "#login .login-button", function() {
 		
-	client.authenticate();
+	// client.authenticate();			// dropbox
 	
   var name = $("#login #name").val();
   
@@ -57,40 +87,42 @@ $(document).on("vclick", "#login .login-button", function() {
 // 정비 내역 리스트 보여주기
 $(document).on("pagebeforecreate", "#list", function() {
 
-	// loadFromLocalStorage();
-	loadFromDropbox();
+	load();
+	// loadFromDropbox();
 });
 
 
-// 화면 리스트에 표시 - localStorage
-/*
-function loadFromLocalStorage()
+// 화면 리스트에 표시 - T developers
+
+function load()
 {
   var template;
   var tbody = $("#list-table tbody");
   tbody.empty();
  
-	saved = localStorage.car_diary;		
+	// saved = localStorage.car_diary;		
 
-	if (typeof saved !== "undefined") {
-		items = JSON.parse(saved);		
-	} 
+	// if (typeof saved !== "undefined") {
+		// items = JSON.parse(saved);		
+	// } 
  
-  for (var index = 0; index < items.length; index++) {
+ 
+  for (var index = 0; index < fetched.totalCount; index++) {
 		template = $("#list-table-item").html();
 		
-		template = template.replace("{date}", items[index].date);
-		template = template.replace("{items}", items[index].items);
-		template = template.replace("{amount}", items[index].amount);
-		template = template.replace("{mileage}", items[index].mileage);
-		template = template.replace("{shop}", items[index].shop);
+		template = template.replace("{date}", fetched.results[index].date);
+		template = template.replace("{items}", fetched.results[index].items);
+		template = template.replace("{amount}", fetched.results[index].amount);
+		template = template.replace("{mileage}", fetched.results[index].mileage);
+		template = template.replace("{shop}", fetched.results[index].shop);
 		
 		tbody.append(template);
   } 	
 }
-*/
+
 
 // 화면 리스트에 표시 - dropbox
+/*
 function loadFromDropbox() {
   var template;
   var tbody = $("#list-table tbody");
@@ -119,6 +151,7 @@ function loadFromDropbox() {
   
 	// addListeners();
 }
+*/
 
 $(document).on("vclick", "#input .input-button", function() {
   

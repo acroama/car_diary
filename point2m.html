@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>통화량 추이 분석</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" /> -->
+  <link rel="stylesheet" href="css/jquery.mobile-1.3.2.css" />
+  
+  <link rel="stylesheet" href="css/2mm.css" />
+  
+  <!-- <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> -->
+  <script src="js/jquery-2.0.3.js"></script>
+  
+  <!-- <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> -->
+  <script src="js/jquery.mobile-1.3.2.js"></script>
+  
+  <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+  <script src="js/highcharts.js"></script>
+  
+  <script src="js/calltaxi.js"></script>
+  
+  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>  
+  
+  <!--script>
+  	$(document).b("mobileinit", function() {
+			$.support.cors = true;
+			$.mobile.allowCrossDomainPages = true;
+		});
+  </script-->
+  
+</head>
+
+<body>
+	
+ 	<!-- 목록 조회 화면 -->
+	<div id="list" data-role="page" data-fullscreen="false" data-theme="d">
+		<div data-role="header" data-position="fixed">
+			<a href="#chart" data-icon="arrow-l" data-transition="flip">차트</a>
+			<h1>콜택시-대리운전 이용분석 (2013년8월)</h1>
+			<a href="#info" data-icon="info" data-transition="flip">정보</a>
+		</div>
+		<div data-role="content">
+			<table data-role="table" data-mode="columntoggle" id="list-table" class="table-stroke" data-column-btn-text="컬럼선택">
+				<thead>
+					<tr>
+						<th>기준년월</th>
+						<th>발신지역</th>
+						<th>통화량</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+		<!-- <div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer-id">
+			<div class="ui-grid-b">
+				<div class="ui-block-a"><a href="#" data-role="button">일간</a></div>
+				<div class="ui-block-b"><a href="#" data-role="button">주간</a></div>
+				<div class="ui-block-c"><a href="#" data-role="button">월간</a></div>
+			</div>
+		</div>	 -->	
+	</div>
+
+	
+ 	<!-- 차트 제공 화면 -->
+	<div id="chart" data-role="page" data-fullscreen="false" data-theme="d">
+		<div data-role="header" data-position="fixed">
+			<a href="#list" data-icon="arrow-l" data-direction="reverse">리스트</a>
+			<h1>콜택시-대리운전 이용분석 (2013년8월)</h1>
+			<a href="#info" data-icon="info">정보</a>
+		</div>
+		<div data-role="content">
+			<label for="gu">구선택</label>
+			<select name="gu" id="gu" data-native-menu="false">
+
+			</select>
+			<div id="container">
+
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed" data-id="footer-id">
+  		<div data-role="controlgroup" data-type="horizontal"> 
+	  		<a href="#" data-role="button" id="chart-column">컬럼 차트</a>
+  			<a href="#" data-role="button" id="chart-line">라인 차트</a>
+	  		<a href="#" data-role="button" id="chart-pie">파이 차트</a>  	
+	  	</div>	
+		</div>	
+	</div>	
+
+
+ 	<!-- 정보 화면 -->
+	<div id="info" data-role="page" data-fullscreen="false" data-theme="d">
+		<div data-role="header" data-position="fixed">
+			<a href="#list" data-icon="arrow-l" data-direction="reverse">리스트</a>
+			<h1>콜택시-대리운전 이용분석 (2013년8월)</h1>
+			<a href="#chart" data-icon="arrow-r">차트</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">스터디 멤버</li>
+				<li><img src="img/firstrun.jpg">박현주 부장</li>
+				<li><img src="img/jaeyon.jpg">황재연 매니저</li>
+				<li><img src="img/acroama.jpg">장현춘 매니저</li>				
+			</ul>
+		</div>
+		<!-- <div data-role="footer" data-position="fixed" data-id="footer-id">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" class="ui-btn-active ui-state-persist">링크1</a></li>
+					<li><a href="#">링크2</a></li>
+					<li><a href="#">링크3</a></li>
+				</ul>
+			</div>
+		</div>	 -->
+	</div>
+	
+	
+ 	<!-- 지도 제공 화면 -->
+	<div id="map" data-role="page" data-fullscreen="false" data-theme="d">
+		<div data-role="header" data-position="fixed">
+			<a href="#list" data-icon="arrow-l" data-direction="reverse">리스트</a>
+			<h1>콜택시-대리운전 이용분석 (2013년8월)</h1>
+			<a href="#chart" data-icon="arrow-r">차트</a>
+		</div>
+		<div data-role="content">
+			<h2>오시는 길</h2>
+			<div id="google-map" class="ui-shadow">
+
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed" data-id="footer-id">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" class="ui-btn-active ui-state-persist">링크1</a></li>
+					<li><a href="#">링크2</a></li>
+					<li><a href="#">링크3</a></li>
+				</ul>
+			</div>
+		</div>	
+	</div>	
+	
+	
+	<!-- 목록 조회에서 사용할 리스트 템플릿 -->
+	<script id="list-table-item" type="text/template">
+		<tr>
+			<th>{date}</th>
+			<td>{area}</td>
+			<td>{call}</td>
+		</tr>
+	</script>
+</body>
+</html>

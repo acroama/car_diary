@@ -14,7 +14,7 @@
 var items = [];
 var fetched;
 
-/******************* Dropbox  
+/* ****************** Dropbox  
 
 var DROPBOX_APP_KEY = "0yi4d0jlmedtjf1";
 
@@ -44,7 +44,7 @@ $(function() {
 		});
 	}
 });
-****************/
+*************** */
 
 // AJAX 호출을 통해 데이터 가져오기
 function makeAjaxCall()
@@ -72,10 +72,23 @@ function makeAjaxCall()
 }
 
 
+// AJAX 호출 끝나면 Session Storage에 저장하고 화면 로드
+$(document).ajaxSuccess(function() {
+	
+	if (typeof fetched !== "undefined")
+		localStorage.car_diary = JSON.stringify(fetched);
+		
+	load();
+});
+
+
+
+
 
 $(document).on("vclick", "#login .login-button", function() {
 		
 	// client.authenticate();			// dropbox
+	// makeAjaxCall();
 	
   var name = $("#login #name").val();
   
@@ -87,7 +100,7 @@ $(document).on("vclick", "#login .login-button", function() {
 // 정비 내역 리스트 보여주기
 $(document).on("pagebeforecreate", "#list", function() {
 
-	load();
+	makeAjaxCall();
 	// loadFromDropbox();
 });
 
